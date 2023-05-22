@@ -6,6 +6,9 @@ from PIL import Image
 import io
 import csv
 
+print("TF version:", tf.__version__)
+print("TF Hub version:", hub.__version__)
+
 app = Flask(__name__)
 app.secret_key = 'some_secret_key'  # Needed for flashing messages
 
