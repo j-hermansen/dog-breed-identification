@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload</title>
+    <style>
+        #drop-area {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            text-align: center;
+            padding: 50px;
+        }
+        .flashes {
+            list-style: none;
+            padding: 0;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- Display Flashed Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div id="drop-area">
+        <form method="post" action="/" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+            <label class="button" for="fileElem">Select some files or drag them here</label>
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+
+    <script>
+        let dropArea = document.getElementById('drop-area')
+        dropArea.addEventListener('dragenter', handlerFunction, false)
+        dropArea.addEventListener('dragleave', handlerFunction, false)
+        dropArea.addEventListener('dragover', handlerFunction, false)
+        dropArea.addEventListener('drop', handlerFunction, false)
+
+        function handlerFunction(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            if (e.type === 'drop') {
+                let files = e.dataTransfer.files
+                handleFiles(files)
+            }
+        }
+
+        function handleFiles(files) {
+            let fileInput = document.getElementById('fileElem');
+            fileInput.files = files;
+        }
+    </script>
+</body>
+</html>
